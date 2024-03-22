@@ -2,6 +2,9 @@
 
 Welcome to the URL Shortener project! This project allows you to shorten long URLs into more manageable, shorter ones.
 
+# Output Video Presentation
+[Output Video Presentation](https://drive.google.com/file/d/1lMVi1mkVu1l68JNZAzd8RhXqDtYEBxwj/view?usp=sharing)
+
 ## Project Overview
 
 This project provides a full-stack URL shortening service similar to popular services like [tinyurl.com](http://tinyurl.com) or [bitly.com]. It consists of a backend server built with Node.js and Express, and uses Redis as a data store for storing URL mappings.
