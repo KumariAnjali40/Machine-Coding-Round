@@ -44,3 +44,7 @@ This project provides a full-stack URL shortening service similar to popular ser
   {
       "originalURL": "https://example.com/your/long/url"
   }
+
+
+![Screenshot](Screenshot (2162).png)
+
