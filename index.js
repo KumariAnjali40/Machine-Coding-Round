@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
+const base62 = require('base62');
 const PORT = process.env.PORT || 4500;
 const Redis = require("ioredis");
 const { connection } = require("./db");
@@ -10,7 +11,8 @@ const redis = new Redis({
     port: process.env.redis_port,
     host: process.env.redis_host,
     password: process.env.redis_password
-});
+  
+  });
 
 
 const app = express();
@@ -23,10 +25,44 @@ app.get('/',(req,res)=>{
 })
 
 
+app.post("/original",async(req,res)=>{
+    try {
+        let {originalURL} = req.body
+        let count = await redis.get("counter")
+        let shortURL = base62.encode(count);
+        
+        let content = {
+            originalURL:originalURL,
+            shortURL:shortURL
+        }
+        let newURL = new URLModel(content)
+        await newURL.save()
+        await redis.incr("counter")
+        res.status(200).json({"newURL":`https://machine-coding-round.onrender.com/${shortURL}`})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({Error:"Error when shortening URL"})
+    }
+})
 
 
-
-
+app.get("/:shortURL",async(req,res)=>{
+    try {
+        let shortURL = req.params.shortURL
+        let entry = await URLModel.findOne({shortURL:shortURL})
+        
+        if(entry){
+            let originalURL = entry.originalURL
+        res.redirect(originalURL)
+        }
+        else{
+            res.send("URL not found")
+        }
+        
+    } catch (error) {
+        res.status(400).send("error when fetching original URL")
+    }
+})
 
 
 
