@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 4500;
 const Redis = require("ioredis")
 
 const redis = new Redis({
-    port: 13881,
-    host: 'redis-13881.c301.ap-south-1-1.ec2.cloud.redislabs.com',
-    password: 'iuIcoRFsH3WwAlScP2KkuBM9CpNGhKTu'
+    port: process.env.redis_port,
+    host: process.env.redis_host,
+    password: process.env.redis_password
 });
 
 
